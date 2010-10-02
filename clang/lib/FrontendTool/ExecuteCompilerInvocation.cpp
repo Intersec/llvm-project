@@ -100,6 +100,7 @@ CreateFrontendBaseAction(CompilerInstance &CI) {
   }
 
   case RewriteMacros:          return std::make_unique<RewriteMacrosAction>();
+  case RewriteBlocks:          return std::make_unique<RewriteBlocksAction>();
   case RewriteTest:            return std::make_unique<RewriteTestAction>();
 #if CLANG_ENABLE_OBJC_REWRITER
   case RewriteObjC:            return std::make_unique<RewriteObjCAction>();
