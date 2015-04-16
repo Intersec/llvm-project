@@ -2772,6 +2772,7 @@ bool TokenAnnotator::spaceRequiredBetween(const AnnotatedLine &Line,
                           tok::kw_switch, tok::kw_case, TT_ForEachMacro,
                           TT_ObjCForIn) ||
              Left.isIf(Line.Type != LT_PreprocessorDirective) ||
+             (Style.SpaceAfterAssert && Left.is(Keywords.kw_assert)) ||
              (Left.isOneOf(tok::kw_try, Keywords.kw___except, tok::kw_catch,
                            tok::kw_new, tok::kw_delete) &&
               (!Left.Previous || Left.Previous->isNot(tok::period))))) ||

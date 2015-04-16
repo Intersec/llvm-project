@@ -148,6 +148,12 @@ struct FormatStyle {
   /// Options for aligning backslashes in escaped newlines.
   EscapedNewlineAlignmentStyle AlignEscapedNewlines;
 
+  /// Add a space after an assert instruction.
+  ///
+  /// This inserts a space between the "assert" keyword and the opening
+  /// parenthesis.
+  bool SpaceAfterAssert;
+
   /// If ``true``, horizontally align operands of binary and ternary
   /// expressions.
   ///
@@ -2163,6 +2169,7 @@ struct FormatStyle {
            SpaceInEmptyBlock == R.SpaceInEmptyBlock &&
            SpaceInEmptyParentheses == R.SpaceInEmptyParentheses &&
            SpacesBeforeTrailingComments == R.SpacesBeforeTrailingComments &&
+           SpaceAfterAssert == R.SpaceAfterAssert &&
            SpacesInAngles == R.SpacesInAngles &&
            SpacesInConditionalStatement == R.SpacesInConditionalStatement &&
            SpacesInContainerLiterals == R.SpacesInContainerLiterals &&
