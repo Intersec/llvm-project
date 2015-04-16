@@ -374,6 +374,7 @@ template <> struct MappingTraits<FormatStyle> {
     }
 
     IO.mapOptional("AccessModifierOffset", Style.AccessModifierOffset);
+    IO.mapOptional("LabelModifierOffset", Style.LabelModifierOffset);
     IO.mapOptional("AlignAfterOpenBracket", Style.AlignAfterOpenBracket);
     IO.mapOptional("AlignConsecutiveMacros", Style.AlignConsecutiveMacros);
     IO.mapOptional("AlignConsecutiveAssignments",
@@ -845,10 +846,11 @@ FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language) {
     LLVMStyle.SpacesInContainerLiterals = false;
   }
 
-  LLVMStyle.SpaceAfterAssert = false;
-  LLVMStyle.SpacesBeforeDefineValue = 1;
-  /* true for Intersec CR */
+  /* Intersec Style */
+  LLVMStyle.SpaceAfterAssert = true;
+  LLVMStyle.SpacesBeforeDefineValue = 2;
   LLVMStyle.BreakLineInElseIf = true;
+  LLVMStyle.LabelModifierOffset = 2;
 
   return LLVMStyle;
 }

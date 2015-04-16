@@ -101,6 +101,8 @@ private:
         (RootToken.isOneOf(Keywords.kw_signals, Keywords.kw_qsignals) &&
          RootToken.Next && RootToken.Next->is(tok::colon)))
       return Style.AccessModifierOffset;
+    if (RootToken.is(tok::kw_case) || RootToken.is(tok::kw_default))
+      return Style.LabelModifierOffset;
     return 0;
   }
 

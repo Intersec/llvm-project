@@ -92,6 +92,9 @@ struct FormatStyle {
   /// \endcode
   bool AlignConsecutiveMacros;
 
+  /// The extra indent or outdent of label modifiers, e.g. \c goto:.
+  int LabelModifierOffset;
+
   /// If ``true``, aligns consecutive assignments.
   ///
   /// This will align the assignment operators of consecutive lines. This
@@ -2075,6 +2078,7 @@ struct FormatStyle {
 
   bool operator==(const FormatStyle &R) const {
     return AccessModifierOffset == R.AccessModifierOffset &&
+           LabelModifierOffset == R.LabelModifierOffset &&
            AlignAfterOpenBracket == R.AlignAfterOpenBracket &&
            AlignConsecutiveAssignments == R.AlignConsecutiveAssignments &&
            AlignConsecutiveDeclarations == R.AlignConsecutiveDeclarations &&
