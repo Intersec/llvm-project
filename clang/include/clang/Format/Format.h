@@ -2070,6 +2070,9 @@ struct FormatStyle {
   /// The way to use tab characters in the resulting file.
   UseTabStyle UseTab;
 
+  /// \brief Allow to have an if on a newline after an else
+  bool BreakLineInElseIf;
+
   bool operator==(const FormatStyle &R) const {
     return AccessModifierOffset == R.AccessModifierOffset &&
            AlignAfterOpenBracket == R.AlignAfterOpenBracket &&
@@ -2181,6 +2184,7 @@ struct FormatStyle {
            SpacesInSquareBrackets == R.SpacesInSquareBrackets &&
            SpaceBeforeSquareBrackets == R.SpaceBeforeSquareBrackets &&
            SpacesBeforeDefineValue == R.SpacesBeforeDefineValue &&
+           BreakLineInElseIf == R.BreakLineInElseIf &&
            Standard == R.Standard && TabWidth == R.TabWidth &&
            StatementMacros == R.StatementMacros && UseTab == R.UseTab &&
            UseCRLF == R.UseCRLF && TypenameMacros == R.TypenameMacros;
