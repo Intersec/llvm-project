@@ -189,6 +189,9 @@ struct FormatToken {
   /// The number of spaces that should be inserted before this token.
   unsigned SpacesRequiredBefore = 0;
 
+  /// The number of spaces that should be inserted after this token.
+  unsigned SpacesRequiredAfter = 0;
+
   /// \c true if it is allowed to break before this token.
   bool CanBreakBefore = false;
 

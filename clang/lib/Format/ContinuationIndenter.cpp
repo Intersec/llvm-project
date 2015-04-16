@@ -560,7 +560,8 @@ void ContinuationIndenter::addTokenOnCurrentLine(LineState &State, bool DryRun,
       State.Stack.back().LastSpace = State.Stack.back().VariablePos;
   }
 
-  unsigned Spaces = Current.SpacesRequiredBefore + ExtraSpaces;
+  unsigned Spaces = std::max(Current.SpacesRequiredBefore,
+                             Previous.SpacesRequiredAfter) + ExtraSpaces;
 
   // Indent preprocessor directives after the hash if required.
   int PPColumnCorrection = 0;

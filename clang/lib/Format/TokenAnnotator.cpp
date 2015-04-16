@@ -1058,6 +1058,8 @@ private:
   LineType parsePreprocessorDirective() {
     bool IsFirstToken = CurrentToken->IsFirst;
     LineType Type = LT_PreprocessorDirective;
+    FormatToken *LastToken;
+
     next();
     if (!CurrentToken)
       return Type;
@@ -1102,6 +1104,13 @@ private:
       Contexts.back().IsExpression = true;
       next();
       parseLine();
+      break;
+    case tok::pp_define:
+      do {
+        LastToken = CurrentToken;
+        next();
+      } while(CurrentToken);
+      LastToken->SpacesRequiredAfter = Style.SpacesBeforeDefineValue;
       break;
     default:
       break;
