@@ -107,6 +107,7 @@ private:
   SmallVector<FormatToken *, 16> Tokens;
 
   llvm::SmallMapVector<IdentifierInfo *, TokenType, 8> Macros;
+  llvm::Regex ForEachRegexp;
 
   bool FormattingDisabled;
 
