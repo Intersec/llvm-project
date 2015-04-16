@@ -512,6 +512,7 @@ template <> struct MappingTraits<FormatStyle> {
     IO.mapOptional("TabWidth", Style.TabWidth);
     IO.mapOptional("TypenameMacros", Style.TypenameMacros);
     IO.mapOptional("UseTab", Style.UseTab);
+    IO.mapOptional("BreakLineInElseIf", Style.BreakLineInElseIf);
   }
 };
 
@@ -772,6 +773,8 @@ FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language) {
 
   LLVMStyle.SpaceAfterAssert = false;
   LLVMStyle.SpacesBeforeDefineValue = 1;
+  /* true for Intersec CR */
+  LLVMStyle.BreakLineInElseIf = true;
 
   return LLVMStyle;
 }

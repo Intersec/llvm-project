@@ -329,6 +329,9 @@ bool ContinuationIndenter::canBreak(const LineState &State) {
 bool ContinuationIndenter::mustBreak(const LineState &State) {
   const FormatToken &Current = *State.NextToken;
   const FormatToken &Previous = *Current.Previous;
+  if (Current.is(tok::kw_if) && Previous.is(tok::kw_else) &&
+      Style.BreakLineInElseIf)
+    return true;
   if (Current.MustBreakBefore || Current.is(TT_InlineASMColon))
     return true;
   if (State.Stack.back().BreakBeforeClosingBrace &&
@@ -755,6 +758,11 @@ unsigned ContinuationIndenter::addTokenOnNewLine(LineState &State,
     Penalty += Style.PenaltyBreakFirstLessLess;
 
   State.Column = getNewLineColumn(State);
+
+  if (Current.is(tok::kw_if) && Previous.is(tok::kw_else) &&
+      Style.BreakLineInElseIf) {
+      State.Column -= Style.ContinuationIndentWidth;
+  }
 
   // Indent nested blocks relative to this column, unless in a very specific
   // JavaScript special case where:
