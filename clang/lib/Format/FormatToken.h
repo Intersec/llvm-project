@@ -132,6 +132,8 @@ struct FormatToken {
   /// The \c Token.
   Token Tok;
 
+  int addOffset = 0;
+
   /// The number of newlines immediately before the \c Token.
   ///
   /// This can be used to determine what the user wrote in the original code
