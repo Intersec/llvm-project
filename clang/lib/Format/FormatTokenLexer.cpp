@@ -30,6 +30,7 @@ FormatTokenLexer::FormatTokenLexer(const SourceManager &SourceMgr, FileID ID,
       Style(Style), IdentTable(getFormattingLangOpts(Style)),
       Keywords(IdentTable), Encoding(Encoding), FirstInLineIndex(0),
       FormattingDisabled(false), MacroBlockBeginRegex(Style.MacroBlockBegin),
+      ForEachRegexp(".*_for_each_.*"),
       MacroBlockEndRegex(Style.MacroBlockEnd) {
   Lex.reset(new Lexer(ID, SourceMgr.getBuffer(ID), SourceMgr,
                       getFormattingLangOpts(Style)));
@@ -789,12 +790,14 @@ FormatToken *FormatTokenLexer::getNextToken() {
     Column = FormatTok->LastLineColumnWidth;
   }
 
-  if (Style.isCpp()) {
-    auto it = Macros.find(FormatTok->Tok.getIdentifierInfo());
+  if (Style.isCpp() && FormatTok->is(tok::identifier)) {
+    auto info = FormatTok->Tok.getIdentifierInfo();
+    auto it = Macros.find(info);
+
     if (!(Tokens.size() > 0 && Tokens.back()->Tok.getIdentifierInfo() &&
           Tokens.back()->Tok.getIdentifierInfo()->getPPKeywordID() ==
               tok::pp_define) &&
-        it != Macros.end()) {
+        (it != Macros.end() || ForEachRegexp.match(info->getName()))) {
       FormatTok->Type = it->second;
     } else if (FormatTok->is(tok::identifier)) {
       if (MacroBlockBeginRegex.match(Text)) {
