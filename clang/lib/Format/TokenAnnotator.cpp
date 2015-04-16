@@ -1790,6 +1790,10 @@ private:
     if (PrevToken->is(tok::r_paren) && PrevToken->MatchingParen) {
       FormatToken *TokenBeforeMatchingParen =
           PrevToken->MatchingParen->getPreviousNonComment();
+
+        if (TokenBeforeMatchingParen->is(tok::identifier) &&
+            TokenBeforeMatchingParen->Tok.getIdentifierInfo()->getName().endswith("_t"))
+            return TT_PointerOrReference;
       if (TokenBeforeMatchingParen &&
           TokenBeforeMatchingParen->isOneOf(tok::kw_typeof, tok::kw_decltype,
                                             TT_TypenameMacro))
