@@ -531,7 +531,7 @@ size_t UnwrappedLineParser::computePPHash() const {
 }
 
 void UnwrappedLineParser::parseBlock(bool MustBeDeclaration, bool AddLevel,
-                                     bool MunchSemi) {
+                                     bool MunchSemi, int addOffsetClosing) {
   assert(FormatTok->isOneOf(tok::l_brace, TT_MacroBlockBegin) &&
          "'{' or macro block token expected");
   const bool MacroBlock = FormatTok->is(TT_MacroBlockBegin);
@@ -568,6 +568,8 @@ void UnwrappedLineParser::parseBlock(bool MustBeDeclaration, bool AddLevel,
     FormatTok->BlockKind = BK_Block;
     return;
   }
+
+  FormatTok->addOffset = addOffsetClosing;
 
   size_t PPEndHash = computePPHash();
 
@@ -1989,7 +1991,7 @@ void UnwrappedLineParser::parseLabel(bool LeftAlignLabel) {
     CompoundStatementIndenter Indenter(this, Line->Level,
                                        Style.BraceWrapping.AfterCaseLabel,
                                        Style.BraceWrapping.IndentBraces);
-    parseBlock(/*MustBeDeclaration=*/false);
+    parseBlock(/*MustBeDeclaration=*/false, true, false, 2);
     if (FormatTok->Tok.is(tok::kw_break)) {
       if (Style.BraceWrapping.AfterControlStatement ==
           FormatStyle::BWACS_Always)

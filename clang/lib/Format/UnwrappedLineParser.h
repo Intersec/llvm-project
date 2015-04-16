@@ -86,7 +86,7 @@ private:
   void parseFile();
   void parseLevel(bool HasOpeningBrace);
   void parseBlock(bool MustBeDeclaration, bool AddLevel = true,
-                  bool MunchSemi = true);
+                  bool MunchSemi = true, int addOffsetClosing = 0);
   void parseChildBlock();
   void parsePPDirective();
   void parsePPDefine();
