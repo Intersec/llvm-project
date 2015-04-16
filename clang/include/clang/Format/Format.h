@@ -1874,6 +1874,9 @@ struct FormatStyle {
   /// \endcode
   bool SpacesInSquareBrackets;
 
+  /// Number of spaces between a preprocessor identifier and its value.
+  unsigned SpacesBeforeDefineValue;
+
   /// Supported language standards.
   enum LanguageStandard {
     /// Use C++03-compatible syntax.
@@ -2009,6 +2012,7 @@ struct FormatStyle {
            SpacesInCStyleCastParentheses == R.SpacesInCStyleCastParentheses &&
            SpacesInParentheses == R.SpacesInParentheses &&
            SpacesInSquareBrackets == R.SpacesInSquareBrackets &&
+           SpacesBeforeDefineValue == R.SpacesBeforeDefineValue &&
            Standard == R.Standard && TabWidth == R.TabWidth &&
            StatementMacros == R.StatementMacros && UseTab == R.UseTab &&
            TypenameMacros == R.TypenameMacros;

@@ -505,6 +505,8 @@ template <> struct MappingTraits<FormatStyle> {
                    Style.SpacesInCStyleCastParentheses);
     IO.mapOptional("SpacesInParentheses", Style.SpacesInParentheses);
     IO.mapOptional("SpacesInSquareBrackets", Style.SpacesInSquareBrackets);
+    IO.mapOptional("SpacesBeforeDefineValue",
+                   Style.SpacesBeforeDefineValue);
     IO.mapOptional("Standard", Style.Standard);
     IO.mapOptional("StatementMacros", Style.StatementMacros);
     IO.mapOptional("TabWidth", Style.TabWidth);
@@ -769,6 +771,7 @@ FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language) {
   }
 
   LLVMStyle.SpaceAfterAssert = false;
+  LLVMStyle.SpacesBeforeDefineValue = 1;
 
   return LLVMStyle;
 }
