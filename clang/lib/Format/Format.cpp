@@ -497,6 +497,7 @@ template <> struct MappingTraits<FormatStyle> {
     IO.mapOptional("SpaceInEmptyParentheses", Style.SpaceInEmptyParentheses);
     IO.mapOptional("SpacesBeforeTrailingComments",
                    Style.SpacesBeforeTrailingComments);
+    IO.mapOptional("SpaceAfterAssert", Style.SpaceAfterAssert);
     IO.mapOptional("SpacesInAngles", Style.SpacesInAngles);
     IO.mapOptional("SpacesInContainerLiterals",
                    Style.SpacesInContainerLiterals);
@@ -766,6 +767,8 @@ FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language) {
   if (Language == FormatStyle::LK_TableGen) {
     LLVMStyle.SpacesInContainerLiterals = false;
   }
+
+  LLVMStyle.SpaceAfterAssert = false;
 
   return LLVMStyle;
 }

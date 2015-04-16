@@ -2613,6 +2613,8 @@ bool TokenAnnotator::spaceRequiredBetween(const AnnotatedLine &Line,
                           tok::kw_switch, tok::kw_case, TT_ForEachMacro,
                           TT_ObjCForIn) ||
              Left.endsSequence(tok::kw_constexpr, tok::kw_if) ||
+             (Style.SpaceAfterAssert && Left.is(tok::identifier) &&
+              Left.Tok.getIdentifierInfo()->isStr("assert")) ||
              (Left.isOneOf(tok::kw_try, Keywords.kw___except, tok::kw_catch,
                            tok::kw_new, tok::kw_delete) &&
               (!Left.Previous || Left.Previous->isNot(tok::period))))) ||
