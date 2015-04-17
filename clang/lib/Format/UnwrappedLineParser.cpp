@@ -1340,6 +1340,7 @@ void UnwrappedLineParser::parseStructuralElement() {
 
       // See if the following token should start a new unwrapped line.
       StringRef Text = FormatTok->TokenText;
+      FormatToken *PrevTok = FormatTok;
       nextToken();
 
       // JS doesn't have macros, and within classes colons indicate fields, not
@@ -1353,6 +1354,7 @@ void UnwrappedLineParser::parseStructuralElement() {
         if (FormatTok->Tok.is(tok::colon) && !Line->MustBeDeclaration) {
           Line->Tokens.begin()->Tok->MustBreakBefore = true;
           parseLabel();
+          PrevTok->addOffset = 2;
           return;
         }
         // Recognize function-like macro usages without trailing semicolon as
