@@ -563,6 +563,18 @@ void ContinuationIndenter::addTokenOnCurrentLine(LineState &State, bool DryRun,
       State.Stack.back().LastSpace = State.Stack.back().VariablePos;
   }
 
+  if (Current.is(TT_BinaryOperator)
+  &&  (State.Line->First->is(tok::kw_if)
+       || (State.Line->First->is(tok::r_brace)
+           && State.Line->First->Next->is(tok::kw_else)))) {
+      Current.SpacesRequiredAfter = 1;
+  }
+  if (Current.is(TT_BinaryOperator) && State.Line->First->is(tok::kw_while)) {
+      if (State.Stack.back().Indent == State.FirstIndent + 7) {
+          Current.SpacesRequiredAfter = 1;
+      }
+  }
+
   unsigned Spaces = std::max(Current.SpacesRequiredBefore,
                              Previous.SpacesRequiredAfter) + ExtraSpaces;
 
@@ -785,6 +797,22 @@ unsigned ContinuationIndenter::addTokenOnNewLine(LineState &State,
        !Current.isOneOf(Keywords.kw_async, Keywords.kw_function)))
     State.Stack.back().NestedBlockIndent = State.Column;
 
+  if (Current.is(TT_BinaryOperator)
+  &&  (State.Line->First->is(tok::kw_if)
+       || (State.Line->First->is(tok::r_brace)
+           && State.Line->First->Next->is(tok::kw_else)))) {
+      if (State.Stack.back().Indent == State.FirstIndent + 4) {
+          /* 4 is the length of "if (" */
+          Current.SpacesRequiredAfter = 2;
+      }
+  }
+  if (Current.is(TT_BinaryOperator) && State.Line->First->is(tok::kw_while)) {
+      if (State.Stack.back().Indent == State.FirstIndent + 7) {
+          /* 7 is the length of "while (" */
+          Current.SpacesRequiredAfter = 2;
+      }
+  }
+
   if (NextNonComment->isMemberAccess()) {
     if (State.Stack.back().CallContinuation == 0)
       State.Stack.back().CallContinuation = State.Column;
@@ -936,6 +964,23 @@ unsigned ContinuationIndenter::getNewLineColumn(const LineState &State) {
   const FormatToken *NextNonComment = Previous.getNextNonComment();
   if (!NextNonComment)
     NextNonComment = &Current;
+
+  if (Current.is(TT_BinaryOperator)
+  &&  (State.Line->First->is(tok::kw_if)
+       || (State.Line->First->is(tok::r_brace)
+           && State.Line->First->Next->is(tok::kw_else)))) {
+      if (State.Stack.back().Indent == State.FirstIndent + 4) {
+          /* 4 is the length of "if (" */
+          return State.FirstIndent;
+      }
+
+  }
+  if (Current.is(TT_BinaryOperator) && State.Line->First->is(tok::kw_while)) {
+      if (State.Stack.back().Indent == State.FirstIndent + 7) {
+          /* 7 is the length of "while (" */
+          return State.Stack.back().Indent - 4;
+      }
+  }
 
   // Java specific bits.
   if (Style.Language == FormatStyle::LK_Java &&
