@@ -993,7 +993,7 @@ unsigned ContinuationIndenter::getNewLineColumn(const LineState &State) {
          Style.Language == FormatStyle::LK_TextProto))) &&
       State.Stack.size() > 1) {
     if (Current.closesBlockOrBlockTypeList(Style))
-      return State.Stack[State.Stack.size() - 2].NestedBlockIndent;
+      return State.Stack[State.Stack.size() - 4].NestedBlockIndent;
     if (Current.MatchingParen &&
         Current.MatchingParen->BlockKind == BK_BracedInit)
       return State.Stack[State.Stack.size() - 2].LastSpace;
@@ -1519,7 +1519,7 @@ void ContinuationIndenter::moveStateToNewBlock(LineState &State) {
   unsigned NestedBlockIndent = State.Stack.back().NestedBlockIndent;
   // ObjC block sometimes follow special indentation rules.
   unsigned NewIndent =
-      NestedBlockIndent + (State.NextToken->is(TT_ObjCBlockLBrace)
+      State.FirstIndent + (State.NextToken->is(TT_ObjCBlockLBrace)
                                ? Style.ObjCBlockIndentWidth
                                : Style.IndentWidth);
   State.Stack.push_back(ParenState(State.NextToken, NewIndent,
