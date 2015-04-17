@@ -2942,8 +2942,11 @@ bool TokenAnnotator::mustBreakBefore(const AnnotatedLine &Line,
     /* here we have any opening block after a if, while... condition, and the
      * opening of blocks */
 
-    /* this test is done in order to exclude blocks */
-    if (!Right.is(TT_ObjCBlockLBrace)) {
+    /* this test is done in order to exclude blocks (using the caret `^`
+     * token) */
+    if (OpeningParen->StartsBinaryExpression
+        || !OpeningParen->Previous || !OpeningParen->Previous->Previous
+        || !OpeningParen->Previous->Previous->is(tok::caret)) {
       if ((OpeningParen->Previous) == Line.First) {
           if (Line.Level * Style.IndentWidth
               + Left.TotalLength + 2 > Style.ColumnLimit)
