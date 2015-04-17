@@ -3124,6 +3124,29 @@ static bool isAllmanBrace(const FormatToken &Tok) {
 bool TokenAnnotator::mustBreakBefore(const AnnotatedLine &Line,
                                      const FormatToken &Right) {
   const FormatToken &Left = *Right.Previous;
+
+  if (Left.is(tok::r_paren) && Right.is(tok::l_brace)) {
+    FormatToken const *OpeningParen = Left.MatchingParen;
+
+    /* here we have any opening block after a if, while... condition, and the
+     * opening of blocks */
+
+    /* this test is done in order to exclude blocks */
+    if (!Right.is(TT_ObjCBlockLBrace)) {
+      if ((OpeningParen->Previous) == Line.First) {
+          if (Line.Level * Style.IndentWidth
+              + Left.TotalLength + 2 > Style.ColumnLimit)
+              return true;
+      } else {
+          if (Line.Level * Style.IndentWidth
+              + OpeningParen->Previous->ColumnWidth/*token len if/while */
+              + 1/* space between if and `(' */
+              + (Left.TotalLength - OpeningParen->TotalLength  + 1)
+              + 2/* space after `)' + `{' */ > Style.ColumnLimit)
+              return true;
+      }
+    }
+  }
   if (Right.NewlinesBefore > 1 && Style.MaxEmptyLinesToKeep > 0)
     return true;
   if (Right.is(tok::kw_if) && Style.BreakLineInElseIf)
