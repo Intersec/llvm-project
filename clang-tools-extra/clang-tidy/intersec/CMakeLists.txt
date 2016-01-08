@@ -3,6 +3,7 @@ set(LLVM_LINK_COMPONENTS support)
 add_clang_library(clangTidyIntersecModule
   TscopeCheck.cpp
   UnusedTscopesCheck.cpp
+  LoopAlloca.cpp
   IntersecTidyModule.cpp
 
   LINK_LIBS
