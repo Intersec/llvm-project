@@ -16,6 +16,7 @@
 #include "../readability/RedundantSmartptrGetCheck.h"
 #include "TscopeCheck.cpp"
 #include "UnusedTscopesCheck.h"
+#include "LoopAlloca.h"
 
 using namespace clang::ast_matchers;
 
@@ -30,6 +31,8 @@ public:
         "intersec-tscope");
     CheckFactories.registerCheck<UnusedTscopesCheck>(
         "intersec-unused-tscopes");
+    CheckFactories.registerCheck<LoopAlloca>(
+        "intersec-loop-alloca");
   }
 
   ClangTidyOptions getModuleOptions() override {
