@@ -17,6 +17,7 @@
 #include "TscopeCheck.cpp"
 #include "UnusedTscopesCheck.h"
 #include "LoopAlloca.h"
+#include "WrongTfunctionCheck.h"
 
 using namespace clang::ast_matchers;
 
@@ -33,6 +34,8 @@ public:
         "intersec-unused-tscopes");
     CheckFactories.registerCheck<LoopAlloca>(
         "intersec-loop-alloca");
+    CheckFactories.registerCheck<WrongTfunctionCheck>(
+        "intersec-wrong-tfunction");
   }
 
   ClangTidyOptions getModuleOptions() override {

@@ -5,6 +5,7 @@ add_clang_library(clangTidyIntersecModule
   UnusedTscopesCheck.cpp
   LoopAlloca.cpp
   IntersecTidyModule.cpp
+  WrongTfunctionCheck.cpp
 
   LINK_LIBS
   clangAST
