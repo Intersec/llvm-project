@@ -15,6 +15,7 @@
 #include "../readability/NamespaceCommentCheck.h"
 #include "../readability/RedundantSmartptrGetCheck.h"
 #include "TscopeCheck.cpp"
+#include "UnusedTscopesCheck.h"
 
 using namespace clang::ast_matchers;
 
@@ -27,6 +28,8 @@ public:
   void addCheckFactories(ClangTidyCheckFactories &CheckFactories) override {
     CheckFactories.registerCheck<TscopeCheck>(
         "intersec-tscope");
+    CheckFactories.registerCheck<UnusedTscopesCheck>(
+        "intersec-unused-tscopes");
   }
 
   ClangTidyOptions getModuleOptions() override {
