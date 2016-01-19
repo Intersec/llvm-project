@@ -670,7 +670,7 @@ void UnwrappedLineParser::parsePPDirective() {
     return;
   }
 
-  FormatTok->SpacesRequiredBefore = PPBranchLevel ? PPBranchLevel * 2 - 1 : 0;
+  FormatTok->SpacesRequiredBefore = PPBranchLevel > 0 ? PPBranchLevel * 2 - 1 : 0;
   switch (FormatTok->Tok.getIdentifierInfo()->getPPKeywordID()) {
   case tok::pp_define:
     parsePPDefine();
