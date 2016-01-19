@@ -2623,7 +2623,7 @@ bool TokenAnnotator::spaceRequiredBetween(const AnnotatedLine &Line,
     return Line.Type == LT_ObjCDecl || Left.is(tok::semi) ||
            (Style.SpaceBeforeParens != FormatStyle::SBPO_Never &&
             (Left.isOneOf(tok::kw_if, tok::pp_elif, tok::kw_for, tok::kw_while,
-                          tok::kw_switch, tok::kw_case, TT_ForEachMacro,
+                          tok::kw_switch, tok::kw_case,
                           TT_ObjCForIn) ||
              Left.endsSequence(tok::kw_constexpr, tok::kw_if) ||
              (Style.SpaceAfterAssert && Left.is(tok::identifier) &&
