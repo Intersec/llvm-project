@@ -35,24 +35,6 @@ void LoopAlloca::registerMatchers(MatchFinder *Finder) {
     );
 }
 
-static
-bool checkForParentBlock(const ParentMap &map,
-                         ASTContext *ctx,
-                         Stmt *node, const Stmt *forStmt,
-                         const Stmt *whileStmt)
-{
-    if (!node) {
-        return false;
-    }
-    if (node->getStmtClass() == Stmt::BlockExprClass) {
-        return true;
-    }
-
-    return checkForParentBlock(map,
-                               ctx,
-                               map.getParent(node), forStmt, whileStmt);
-}
-
 void LoopAlloca::check(const MatchFinder::MatchResult &Result) {
     const auto *MatchedDecl = Result.Nodes.getNodeAs<CallExpr>("alloca_loop");
     const auto *whileStmt = Result.Nodes.getNodeAs<WhileStmt>("while");
@@ -78,9 +60,7 @@ void LoopAlloca::check(const MatchFinder::MatchResult &Result) {
     ParentMap parentMap(
         const_cast<Stmt *>(parent)
     );
-    if (checkForParentBlock(parentMap,
-                            Result.Context,
-                            const_cast<CallExpr *>(MatchedDecl), forStmt, whileStmt)) {
+    if (!parentMap.getParent(MatchedDecl)) {
         return;
     }
 
