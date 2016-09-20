@@ -993,7 +993,7 @@ unsigned ContinuationIndenter::getNewLineColumn(const LineState &State) {
          Style.Language == FormatStyle::LK_TextProto))) &&
       State.Stack.size() > 1) {
     if (Current.closesBlockOrBlockTypeList(Style))
-      return State.Stack[State.Stack.size() - 4].NestedBlockIndent;
+      return State.FirstIndent;
     if (Current.MatchingParen &&
         Current.MatchingParen->BlockKind == BK_BracedInit)
       return State.Stack[State.Stack.size() - 2].LastSpace;
