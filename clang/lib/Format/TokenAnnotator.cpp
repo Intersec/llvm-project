@@ -3153,7 +3153,8 @@ bool TokenAnnotator::mustBreakBefore(const AnnotatedLine &Line,
   }
   if (Right.NewlinesBefore > 1 && Style.MaxEmptyLinesToKeep > 0)
     return true;
-  if (Right.is(tok::kw_if) && Style.BreakLineInElseIf)
+  if (Right.is(tok::kw_if) && Left.is(tok::kw_else) &&
+      Style.BreakLineInElseIf)
     return true;
 
   if (Style.Language == FormatStyle::LK_JavaScript) {
