@@ -317,7 +317,7 @@ std::unique_ptr<ASTConsumer>
 clang::CreateBlocksRewriter(const std::string &InFile, std::unique_ptr<raw_ostream> OS,
                             DiagnosticsEngine &Diags, const LangOptions &LOpts,
                             bool SilenceRewriteMacroWarning) {
-  return llvm::make_unique<RewriteBlocks>(InFile, std::move(OS), Diags, LOpts,
+  return std::make_unique<RewriteBlocks>(InFile, std::move(OS), Diags, LOpts,
                                           SilenceRewriteMacroWarning);
 }
 
