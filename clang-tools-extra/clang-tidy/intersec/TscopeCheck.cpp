@@ -19,7 +19,7 @@ namespace tidy {
 
 void TscopeCheck::registerMatchers(MatchFinder *Finder) {
   // creation of a new t stack
-  auto tpush = callExpr(callee(namedDecl(matchesName("mem_stack_push"))));
+  auto tpush = callExpr(callee(namedDecl(matchesName("mem_stack_pool_push"))));
 
   Finder->addMatcher(
     callExpr(expr().bind("callee"),
@@ -31,7 +31,7 @@ void TscopeCheck::registerMatchers(MatchFinder *Finder) {
              // but do not match if a new t_scope was created
              unless(hasAncestor(compoundStmt(
                anyOf(
-                 // direct call to mem_stack_push
+                 // direct call to mem_stack_pool_push
                  has(tpush),
                  // "t_scope;" instruction
                  has(declStmt(has(varDecl(has(tpush)))))

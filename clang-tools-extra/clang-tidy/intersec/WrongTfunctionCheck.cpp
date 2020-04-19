@@ -25,7 +25,7 @@ void WrongTfunctionCheck::registerMatchers(MatchFinder *Finder) {
                          callee(tfunctions),
                          unless(hasAncestor(compoundStmt(has(
                              declStmt(has(varDecl(has(callExpr(callee(namedDecl(
-                                 matchesName("mem_stack_push"))))))))))))))));
+                                 matchesName("mem_stack_pool_push"))))))))))))))));
     Finder->addMatcher(matcher, this);
 }
 
