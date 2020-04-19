@@ -64,7 +64,7 @@ void LoopAlloca::check(const MatchFinder::MatchResult &Result) {
         return;
     }
 
-    diag(MatchedDecl->getLocStart(), "variable allocated with 'alloca' should not be declared in a loop scope");
+    diag(MatchedDecl->getBeginLoc(), "variable allocated with 'alloca' should not be declared in a loop scope");
 }
 
 } // namespace intersec

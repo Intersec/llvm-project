@@ -53,7 +53,7 @@ void TscopeCheck::check(const MatchFinder::MatchResult &Result) {
   if (!llvm::Regex("^_*z?r?_?t_").match(caller_name)
   &&  !caller_name.equals("ipool"))
   {
-    diag(called->getLocStart(), "function '%0' is called by function '%1' "
+    diag(called->getBeginLoc(), "function '%0' is called by function '%1' "
         "but is missing a t_scope.")
       << called->getDirectCallee()->getName() << caller->getName();
   }
