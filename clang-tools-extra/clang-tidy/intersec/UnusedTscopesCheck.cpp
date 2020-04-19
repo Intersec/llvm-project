@@ -18,7 +18,7 @@ namespace tidy {
 
 void UnusedTscopesCheck::registerMatchers(MatchFinder *Finder) {
   Finder->addMatcher(compoundStmt(has(declStmt(has(varDecl(has(callExpr(
-    callee(namedDecl(matchesName("mem_stack_push")))).bind("tscope")))))),
+    callee(namedDecl(matchesName("mem_stack_pool_push")))).bind("tscope")))))),
           unless(hasDescendant(callExpr(callee(namedDecl(
               matchesName("::z?_*t_"))))))), this);
 }
