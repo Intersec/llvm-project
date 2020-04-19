@@ -26,7 +26,7 @@ void UnusedTscopesCheck::registerMatchers(MatchFinder *Finder) {
 void UnusedTscopesCheck::check(const MatchFinder::MatchResult &Result) {
   auto Tscope = Result.Nodes.getNodeAs<CallExpr>("tscope");
 
-  diag(Tscope->getLocStart(), "t_scope is not used");
+  diag(Tscope->getBeginLoc(), "t_scope is not used");
 }
 
 } // namespace tidy
